@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impact Dashboard · Atelier Re-Commence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      background-color: #F7F4EE;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='none'/%3E%3Cline x1='0' y1='0' x2='8' y2='0' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='2' x2='8' y2='2' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='6' x2='8' y2='6' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='0' x2='0' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='2' y1='0' x2='2' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='6' y1='0' x2='6' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Ccircle cx='0' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='0' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='2' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='2' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      color: #2C2C26;
+    }
+
+    .dash {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .dash-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid #3D3D35;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dash-header-left { display: flex; align-items: center; gap: 14px; }
+
+    .tailor-mark {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid #A85A3A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .tailor-mark::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 0.5px solid #A85A3A;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    .tailor-mark-text {
+      font-family: 'Special Elite', serif;
+      font-size: 14px;
+      color: #A85A3A;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dash-title {
+      font-family: 'Special Elite', serif;
+      font-size: 24px;
+      letter-spacing: 0.06em;
+      color: #2C2C26;
+    }
+
+    .dash-sub {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-top: 4px;
+    }
+
+    .city-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .city-tab {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      cursor: pointer;
+      border: 1px solid #A85A3A;
+      background: transparent;
+      color: #A85A3A;
+      border-radius: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .city-tab.active { background: #A85A3A; color: #FDFAF4; }
+    .city-tab:hover:not(.active) { background: rgba(168,90,58,0.08); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: #EDEAE2;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 26px;
+      font-weight: 500;
+      color: #2C2C26;
+      line-height: 1;
+    }
+
+    .metric-unit { font-size: 12px; color: #7A7A6E; margin-top: 4px; }
+
+    .metric-delta { font-size: 11px; margin-top: 4px; }
+    .metric-delta.up { color: #3B6D11; }
+    .metric-delta.neutral { color: #7A7A6E; }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-bottom: 10px;
+    }
+
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .charts-row { grid-template-columns: 1fr; }
+      .story-row { grid-template-columns: 1fr; }
+    }
+
+    .chart-block {
+      background: #FDFAF4;
+      border: 0.5px solid #C8C4B8;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+
+    .chart-title {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-bottom: 12px;
+    }
+
+    .hub-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+
+    .hub-label { font-size: 12px; color: #2C2C26; min-width: 110px; }
+
+    .hub-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: #EDEAE2;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .hub-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: #A85A3A;
+      transition: width 0.4s ease;
+    }
+
+    .hub-val { font-size: 11px; color: #7A7A6E; min-width: 32px; text-align: right; }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag-pill {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 0.5px solid #C8C4B8;
+      color: #7A7A6E;
+      background: #EDEAE2;
+    }
+
+    .tag-pill.large {
+      font-size: 13px;
+      padding: 4px 12px;
+      color: #A85A3A;
+      border-color: #A85A3A;
+      background: rgba(168,90,58,0.06);
+    }
+
+    .tag-pill.med { font-size: 12px; color: #2C2C26; }
+
+    .story-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .story-card {
+      background: #FDFAF4;
+      border: 0.5px solid #A85A3A;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+
+    .story-name {
+      font-family: 'Special Elite', serif;
+      font-size: 15px;
+      color: #2C2C26;
+      margin-bottom: 4px;
+    }
+
+    .story-detail {
+      font-size: 12px;
+      font-weight: 300;
+      color: #5A5A52;
+      line-height: 1.55;
+    }
+
+    .story-tag {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #A85A3A;
+      margin-top: 6px;
+      display: block;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #7A7A6E;
+      letter-spacing: 0.06em;
+      margin-top: 1.5rem;
+      text-align: center;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<main class="dash">
+  <header class="dash-header">
+    <div class="dash-header-left">
+      <div class="tailor-mark" aria-hidden="true">
+        <span class="tailor-mark-text">A·R</span>
+      </div>
+      <div>
+        <div class="dash-title">Impact Dashboard</div>
+        <div class="dash-sub">Atelier Re-Commence · Projected Year 1</div>
+      </div>
+    </div>
+    <nav class="city-tabs" aria-label="City selector">
+      <button class="city-tab active" onclick="setCity('lyon', this)">Lyon</button>
+      <button class="city-tab" onclick="setCity('bordeaux', this)">Bordeaux</button>
+      <button class="city-tab" onclick="setCity('nyc', this)">New York</button>
+    </nav>
+  </header>
+
+  <div class="metrics-grid" id="metricsGrid"></div>
+
+  <div class="charts-row">
+    <div class="chart-block">
+      <div class="chart-title">Activity by Hub</div>
+      <div id="hubChart"></div>
+    </div>
+    <div class="chart-block">
+      <div class="chart-title">Community Focus Areas</div>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+  </div>
+
+  <div class="section-label">Community Stories</div>
+  <div class="story-row" id="storyRow"></div>
+
+  <p class="footer-note" id="footerNote"></p>
+</main>
+
+<script>
+  const sharedTags = [
+    { label: 'Circular Economy', size: 'large' },
+    { label: 'Repair Culture', size: 'large' },
+    { label: 'Intergenerational', size: 'large' },
+    { label: 'Community Café', size: 'med' },
+    { label: 'Makerspace', size: 'med' },
+    { label: 'Skills Pipeline', size: 'med' },
+    { label: 'ESS Sector', size: '' },
+    { label: 'Textile Archive', size: '' }
+  ];
+
+  const cities = {
+    lyon: {
+      metrics: [
+        { label: 'Members', value: '340', unit: 'registered', delta: '↑ est. growth yr 1', dir: 'up' },
+        { label: 'Garments Repaired', value: '1,200', unit: 'pieces', delta: '↑ circular impact', dir: 'up' },
+        { label: 'Workshops Held', value: '48', unit: 'sessions', delta: 'across 4 hubs', dir: 'neutral' },
+        { label: 'kg Textile Diverted', value: '860', unit: 'from landfill', delta: '↑ est. yr 1', dir: 'up' }
+      ],
+      hubs: [
+        { name: 'Makerspace', val: 95 },
+        { name: "L'Espace Events", val: 74 },
+        { name: 'Garment Stories', val: 68 },
+        { name: 'Seeds & Beans Café', val: 82 }
+      ],
+      tags: sharedTags,
+      stories: [
+        { name: "Marguerite, 71", detail: "Brought her late husband's wool coat. Left with it re-lined and a new story added to the Garment Archive.", tag: "Garment Stories · Lyon" },
+        { name: "Théo, 24", detail: "Joined a natural dye workshop. Now volunteers at the Makerspace twice a month and is teaching embroidery to seniors.", tag: "Makerspace · Lyon" }
+      ],
+      note: "Lyon data reflects projected Year 1 targets based on comparable ESS social enterprises in the Auvergne-Rhône-Alpes region."
+    },
+    bordeaux: {
+      metrics: [
+        { label: 'Members', value: '210', unit: 'registered', delta: '↑ est. growth yr 1', dir: 'up' },
+        { label: 'Garments Repaired', value: '780', unit: 'pieces', delta: '↑ circular impact', dir: 'up' },
+        { label: 'Workshops Held', value: '32', unit: 'sessions', delta: 'across 4 hubs', dir: 'neutral' },
+        { label: 'kg Textile Diverted', value: '540', unit: 'from landfill', delta: '↑ est. yr 1', dir: 'up' }
+      ],
+      hubs: [
+        { name: 'Makerspace', val: 80 },
+        { name: "L'Espace Events", val: 65 },
+        { name: 'Garment Stories', val: 60 },
+        { name: 'Seeds & Beans Café', val: 70 }
+      ],
+      tags: [
+        { label: 'Circular Economy', size: 'large' },
+        { label: 'Repair Culture', size: 'large' },
+        { label: 'Intergenerational', size: 'large' },
+        { label: 'Community Café', size: 'med' },
+        { label: 'Makerspace', size: 'med' },
+        { label: 'Skills Pipeline', size: 'med' },
+        { label: 'Heritage Craft', size: '' },
+        { label: 'ESS Sector', size: '' },
+        { label: 'Textile Archive', size: '' }
+      ],
+      stories: [
+        { name: "Isabelle, 58", detail: "Dropped off three vintage blouses from her mother's wardrobe. They were catalogued, repaired, and featured in the first Garment Stories exhibition.", tag: "Garment Stories · Bordeaux" },
+        { name: "Karim, 19", detail: "Attended a workshop on upcycling denim. Now develops his own upcycled accessories line and sells through the atelier.", tag: "Makerspace · Bordeaux" }
+      ],
+      note: "Bordeaux data reflects projected Year 1 targets based on comparable ESS social enterprises in the Nouvelle-Aquitaine region."
+    },
+    nyc: {
+      metrics: [
+        { label: 'Members', value: '520', unit: 'registered', delta: '↑ est. growth yr 1', dir: 'up' },
+        { label: 'Garments Repaired', value: '1,800', unit: 'pieces', delta: '↑ circular impact', dir: 'up' },
+        { label: 'Workshops Held', value: '72', unit: 'sessions', delta: 'across 4 hubs', dir: 'neutral' },
+        { label: 'kg Textile Diverted', value: '1,240', unit: 'from landfill', delta: '↑ est. yr 1', dir: 'up' }
+      ],
+      hubs: [
+        { name: 'Makerspace', val: 98 },
+        { name: "L'Espace Events", val: 88 },
+        { name: 'Garment Stories', val: 75 },
+        { name: 'Seeds & Beans Café', val: 90 }
+      ],
+      tags: [
+        { label: 'Circular Economy', size: 'large' },
+        { label: 'Repair Culture', size: 'large' },
+        { label: 'Intergenerational', size: 'large' },
+        { label: 'Community Café', size: 'med' },
+        { label: 'Makerspace', size: 'med' },
+        { label: 'Skills Pipeline', size: 'med' },
+        { label: 'ESS Model Export', size: '' },
+        { label: 'ESS Sector', size: '' },
+        { label: 'Textile Archive', size: '' }
+      ],
+      stories: [
+        { name: "Gloria, 67", detail: "Brought her grandmother's church dress from the 1940s. It was repaired, photographed, and added to the archive. She cried when she saw it on the wall.", tag: "Garment Stories · New York" },
+        { name: "Marcus, 22", detail: "Attended a workshop on upcycling denim. Now leads Saturday sessions for teenagers in the Makerspace.", tag: "Makerspace · New York" }
+      ],
+      note: "New York data reflects projected Year 1 targets modeled on Brooklyn-based circular economy and maker community organizations."
+    }
+  };
+
+  let currentCity = 'lyon';
+
+  function setCity(city, el) {
+    currentCity = city;
+    document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    render();
+  }
+
+  function render() {
+    const d = cities[currentCity];
+
+    document.getElementById('metricsGrid').innerHTML = d.metrics.map(m => `
+      <div class="metric-card">
+        <div class="metric-label">${m.label}</div>
+        <div class="metric-value">${m.value}</div>
+        <div class="metric-unit">${m.unit}</div>
+        <div class="metric-delta ${m.dir}">${m.delta}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('hubChart').innerHTML = d.hubs.map(h => `
+      <div class="hub-row">
+        <div class="hub-label">${h.name}</div>
+        <div class="hub-bar-wrap"><div class="hub-bar" style="width:${h.val}%"></div></div>
+        <div class="hub-val">${h.val}%</div>
+      </div>
+    `).join('');
+
+    document.getElementById('tagCloud').innerHTML = d.tags.map(t => `
+      <span class="tag-pill ${t.size}">${t.label}</span>
+    `).join('');
+
+    document.getElementById('storyRow').innerHTML = d.stories.map(s => `
+      <article class="story-card">
+        <div class="story-name">${s.name}</div>
+        <div class="story-detail">${s.detail}</div>
+        <span class="story-tag">${s.tag}</span>
+      </article>
+    `).join('');
+
+    document.getElementById('footerNote').textContent = d.note;
+  }
+
+  render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garment Archive · Atelier Re-Commence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      background-color: #F7F4EE;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='none'/%3E%3Cline x1='0' y1='0' x2='8' y2='0' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='2' x2='8' y2='2' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='6' x2='8' y2='6' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='0' x2='0' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='2' y1='0' x2='2' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='6' y1='0' x2='6' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Ccircle cx='0' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='0' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='2' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='2' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    .arc {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .arc-header {
+      text-align: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid #3D3D35;
+    }
+
+    .arc-title {
+      font-family: 'Special Elite', serif;
+      font-size: 30px;
+      letter-spacing: 0.08em;
+      color: #2C2C26;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .arc-atelier {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      display: block;
+      text-align: center;
+    }
+
+    .below-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 8px;
+    }
+
+    .piece-count {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      white-space: nowrap;
+    }
+
+    .add-btn {
+      padding: 8px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1.5px solid #A85A3A;
+      border-radius: 0;
+      background-color: #FDFAF4;
+      color: #A85A3A;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .add-btn:hover { background-color: #A85A3A; color: #FDFAF4; }
+
+    .form-panel {
+      border: 1px solid #C8C4B8;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      background-color: #FDFAF4;
+    }
+
+    .form-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-bottom: 1rem;
+    }
+
+    .form-row { margin-bottom: 14px; }
+
+    .form-label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7A7A6E;
+      margin-bottom: 5px;
+    }
+
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      border-radius: 0;
+      border: 0.5px solid #C8C4B8;
+      background-color: #FDFAF4;
+      color: #2C2C26;
+      padding: 6px 8px;
+      outline: none;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      border-color: #A85A3A;
+    }
+
+    .form-row textarea { min-height: 80px; resize: vertical; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+
+    .tag-chip {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 0.5px solid #C8C4B8;
+      cursor: pointer;
+      color: #7A7A6E;
+      background-color: transparent;
+      transition: background-color 0.1s, color 0.1s;
+    }
+
+    .tag-chip.selected { background-color: #3D3D35; color: #F7F4EE; border-color: #3D3D35; }
+
+    .form-actions { display: flex; gap: 8px; margin-top: 1rem; }
+
+    .btn-save {
+      flex: 1;
+      padding: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1.5px solid #A85A3A;
+      background-color: #FDFAF4;
+      color: #A85A3A;
+      border-radius: 0;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .btn-save:hover { background-color: #A85A3A; color: #FDFAF4; }
+
+    .btn-cancel {
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: #7A7A6E;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .filter-chip {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      cursor: pointer;
+      border: 0.5px solid #C8C4B8;
+      background-color: transparent;
+      color: #7A7A6E;
+      transition: background-color 0.1s, color 0.1s;
+    }
+
+    .filter-chip.active { background-color: #3D3D35; color: #F7F4EE; border-color: #3D3D35; }
+
+    .garment-grid { display: flex; flex-direction: column; gap: 12px; }
+
+    .garment-card {
+      background-color: #FDFAF4;
+      border: 1px solid #A85A3A;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .garment-index { font-size: 10px; letter-spacing: 0.1em; color: #7A7A6E; }
+    .garment-year { font-size: 10px; letter-spacing: 0.08em; color: #7A7A6E; }
+
+    .card-body { display: flex; gap: 12px; align-items: flex-start; }
+
+    .card-photo-wrap {
+      width: 72px;
+      min-width: 72px;
+      height: 90px;
+      border-radius: 4px;
+      border: 0.5px solid #C8C4B8;
+      overflow: hidden;
+      background-color: #EDE9E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-photo-wrap svg { width: 28px; height: 28px; opacity: 0.3; }
+
+    .card-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .card-text { flex: 1; min-width: 0; }
+
+    .garment-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: #2C2C26;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .garment-story {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: #5A5A52;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .garment-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .garment-tag {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      color: #7A7A6E;
+      border: 0.5px solid #C8C4B8;
+      border-radius: 20px;
+      background-color: transparent;
+    }
+
+    .photo-note {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: #B4A99A;
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    .empty-state { text-align: center; padding: 3rem 1rem; }
+
+    .empty-text {
+      font-family: 'Special Elite', serif;
+      font-size: 15px;
+      color: #7A7A6E;
+    }
+  </style>
+</head>
+<body>
+
+<main class="arc">
+  <header class="arc-header">
+    <h1 class="arc-title">Garment Archive</h1>
+    <span class="arc-atelier">Atelier Re-Commence</span>
+  </header>
+
+  <div class="below-header">
+    <span class="piece-count" id="pieceCount">04 pieces</span>
+    <button class="add-btn" onclick="toggleForm()">
+      <i class="ti ti-plus" style="font-size:12px;" aria-hidden="true"></i> add a piece
+    </button>
+  </div>
+
+  <div class="form-panel" id="formPanel" style="display:none;">
+    <div class="form-eyebrow">new entry</div>
+    <div class="form-row">
+      <label class="form-label" for="gName">garment name</label>
+      <input type="text" id="gName" placeholder="e.g. Grandma's Linen Coat" />
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="gYear">year · origin</label>
+      <input type="text" id="gYear" placeholder="e.g. 1972 · Lyon" />
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="gStory">story</label>
+      <textarea id="gStory" placeholder="Provenance, repairs, who wore it, what changed..."></textarea>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="gMaterial">material</label>
+      <input type="text" id="gMaterial" placeholder="e.g. Wool, Linen, Silk" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">tags</label>
+      <div class="tag-row" id="tagRow">
+        <span class="tag-chip" onclick="toggleTag(this)">repaired</span>
+        <span class="tag-chip" onclick="toggleTag(this)">upcycled</span>
+        <span class="tag-chip" onclick="toggleTag(this)">inherited</span>
+        <span class="tag-chip" onclick="toggleTag(this)">donated</span>
+        <span class="tag-chip" onclick="toggleTag(this)">thrifted</span>
+        <span class="tag-chip" onclick="toggleTag(this)">found</span>
+        <span class="tag-chip" onclick="toggleTag(this)">hand-sewn</span>
+        <span class="tag-chip" onclick="toggleTag(this)">embroidered</span>
+        <span class="tag-chip" onclick="toggleTag(this)">natural dye</span>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-save" onclick="saveGarment()">save entry</button>
+      <button class="btn-cancel" onclick="toggleForm()">cancel</button>
+    </div>
+  </div>
+
+  <div id="mainContent">
+    <div class="controls-row" id="controlsRow">
+      <button class="filter-chip active" onclick="filterBy('all', this)">all</button>
+      <button class="filter-chip" onclick="filterBy('repaired', this)">repaired</button>
+      <button class="filter-chip" onclick="filterBy('inherited', this)">inherited</button>
+      <button class="filter-chip" onclick="filterBy('thrifted', this)">thrifted</button>
+      <button class="filter-chip" onclick="filterBy('upcycled', this)">upcycled</button>
+    </div>
+    <div class="garment-grid" id="garmentGrid"></div>
+  </div>
+</main>
+
+<script>
+  const placeholder = `<div class="card-photo-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#A85A3A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div>`;
+
+  let garments = [
+    {
+      name: "Grandma C's Wool Coat",
+      year: "1961 · Brooklyn",
+      story: "Worn every winter for 33 years. The left cuff was turned and re-stitched by her daughter, Elaine, in 1989. Still smells faintly like roses.",
+      material: "Boiled Wool",
+      tags: ["inherited", "repaired"]
+    },
+    {
+      name: "The Market Jacket",
+      year: "1978 · Lyon",
+      story: "Found at the Marché de la Croix-Rousse. The original buttons have been replaced with mismatched brass ones from a tin. The lining was hand-sewn from a flour sack.",
+      material: "Cotton Canvas",
+      tags: ["found", "upcycled", "hand-sewn"]
+    },
+    {
+      name: "The Talking Heads Tee",
+      year: "1983 · Providence, RI",
+      story: "Found at a Goodwill in Albany for $4. Faded to the exact right shade of grey. The iron-on had started to peel so the letters were re-stitched by hand with red thread. It has been worn to at least three concerts since.",
+      material: "Cotton Jersey",
+      tags: ["thrifted", "repaired"]
+    },
+    {
+      name: "Papa's Linen Shirt",
+      year: "1995 · Marseille",
+      story: "Worn every summer Sunday for years. The collar frayed and was turned under and hand-stitched by his wife, Marie. Still holds the shape of someone who moved slowly and with intention.",
+      material: "Washed Linen",
+      tags: ["inherited", "repaired"]
+    }
+  ];
+
+  let activeFilter = 'all';
+
+  function toggleForm() {
+    const p = document.getElementById('formPanel');
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function toggleTag(el) { el.classList.toggle('selected'); }
+
+  function saveGarment() {
+    const name = document.getElementById('gName').value.trim();
+    const year = document.getElementById('gYear').value.trim();
+    const story = document.getElementById('gStory').value.trim();
+    const material = document.getElementById('gMaterial').value.trim();
+    const selectedTags = [...document.querySelectorAll('.tag-chip.selected')].map(t => t.textContent);
+    if (!name) return;
+    garments.unshift({ name, year, story, material, tags: selectedTags });
+    document.getElementById('gName').value = '';
+    document.getElementById('gYear').value = '';
+    document.getElementById('gStory').value = '';
+    document.getElementById('gMaterial').value = '';
+    document.querySelectorAll('.tag-chip.selected').forEach(t => t.classList.remove('selected'));
+    toggleForm();
+    renderGarments();
+  }
+
+  function filterBy(tag, el) {
+    activeFilter = tag;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderGarments();
+  }
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function renderGarments() {
+    const grid = document.getElementById('garmentGrid');
+    const pieceCount = document.getElementById('pieceCount');
+    pieceCount.textContent = pad(garments.length) + ' piece' + (garments.length !== 1 ? 's' : '');
+
+    const filtered = activeFilter === 'all' ? garments : garments.filter(g => g.tags.includes(activeFilter));
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><div class="empty-text">no pieces match this filter</div></div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map((g, i) => `
+      <article class="garment-card">
+        <div class="card-top">
+          <span class="garment-index">${pad(i + 1)}</span>
+          <span class="garment-year">${g.year || ''}</span>
+        </div>
+        <div class="card-body">
+          ${placeholder}
+          <div class="card-text">
+            <div class="garment-name">${g.name}</div>
+            ${g.story ? `<div class="garment-story">${g.story}</div>` : ''}
+            <div class="garment-tags">
+              ${g.material ? `<span class="garment-tag">${g.material}</span>` : ''}
+              ${g.tags.map(t => `<span class="garment-tag">${t}</span>`).join('')}
+            </div>
+            <div class="photo-note">photo upload available in full version</div>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  renderGarments();
+</script>
+
+</body>
+</html>
