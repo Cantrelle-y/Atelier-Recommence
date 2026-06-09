@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Re-Commence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      background-color: #F7F4EE;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='none'/%3E%3Cline x1='0' y1='0' x2='8' y2='0' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='2' x2='8' y2='2' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='4' x2='8' y2='4' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='0' y1='6' x2='8' y2='6' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='0' y1='0' x2='0' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='2' y1='0' x2='2' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Cline x1='4' y1='0' x2='4' y2='8' stroke='%236B7FA3' stroke-width='0.4' stroke-opacity='0.22'/%3E%3Cline x1='6' y1='0' x2='6' y2='8' stroke='%236B7FA3' stroke-width='0.3' stroke-opacity='0.12'/%3E%3Ccircle cx='0' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='0' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='0' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='4' r='0.5' fill='%236B7FA3' fill-opacity='0.16'/%3E%3Ccircle cx='2' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='2' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='2' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3Ccircle cx='6' cy='6' r='0.35' fill='%236B7FA3' fill-opacity='0.1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      color: #2C2C26;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .page {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .tailor-mark {
+      width: 52px;
+      height: 52px;
+      border: 1.5px solid #A85A3A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0 auto 1.5rem;
+    }
+
+    .tailor-mark::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 0.5px solid #A85A3A;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    .tailor-mark-text {
+      font-family: 'Special Elite', serif;
+      font-size: 14px;
+      color: #A85A3A;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-title {
+      font-family: 'Special Elite', serif;
+      font-size: 36px;
+      letter-spacing: 0.04em;
+      color: #2C2C26;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .site-tagline {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: #7A7A6E;
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #A85A3A;
+      margin: 0 auto 1.5rem;
+    }
+
+    .site-description {
+      font-size: 14px;
+      color: #5A5A52;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+      text-align: left;
+    }
+
+    @media (min-width: 480px) {
+      .cards { grid-template-columns: 1fr 1fr; }
+      .card-full { grid-column: 1 / -1; }
+    }
+
+    .card {
+      background: #FDFAF4;
+      border: 0.75px solid #A85A3A;
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background 0.15s;
+    }
+
+    .card:hover { background: #F5EFE6; }
+
+    .card-label {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #A85A3A;
+      margin-bottom: 5px;
+    }
+
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      color: #2C2C26;
+      margin-bottom: 5px;
+    }
+
+    .card-body {
+      font-size: 12px;
+      color: #7A7A6E;
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      font-size: 12px;
+      color: #A85A3A;
+      margin-top: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #B4A99A;
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+
+  <div class="tailor-mark" aria-hidden="true">
+    <span class="tailor-mark-text">A·R</span>
+  </div>
+
+  <h1 class="site-title">Atelier Re-Commence</h1>
+  <p class="site-tagline">Repair. Relate. Re-imagine.</p>
+
+  <div class="divider"></div>
+
+  <p class="site-description">A circular economy makerspace and social enterprise where communities extend the life of objects, learn practical skills, and build lasting relationships. Built around people and purpose.</p>
+
+  <nav class="cards" aria-label="Site sections">
+
+    <a href="pitch-deck.html" class="card card-full">
+      <div class="card-label">Concept Pitch · 2027</div>
+      <div class="card-title">Pitch Deck</div>
+      <div class="card-body">Our vision, four hubs, business model, and founding ask. The full story of what we are building and why.</div>
+      <div class="card-arrow">View deck →</div>
+    </a>
+
+    <a href="impact-dashboard.html" class="card">
+      <div class="card-label">Projected Year 1</div>
+      <div class="card-title">Impact Dashboard</div>
+      <div class="card-body">Community metrics across Lyon, Bordeaux, and New York.</div>
+      <div class="card-arrow">Explore →</div>
+    </a>
+
+    <a href="garment-archive.html" class="card">
+      <div class="card-label">Living Archive</div>
+      <div class="card-title">Garment Stories</div>
+      <div class="card-body">A digital archive preserving the memories of material and culture.</div>
+      <div class="card-arrow">Browse →</div>
+    </a>
+
+  </nav>
+
+  <p class="footer-note">arecommence.com · prototype · 2027</p>
+
+</main>
+
+</body>
+</html>
